@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#081016">
+  <meta name="color-scheme" content="dark">
+  <meta name="application-name" content="C152 SOP">
+  <meta name="apple-mobile-web-app-title" content="C152 SOP">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no, email=no, address=no, date=no">
+  <meta name="description" content="Assistente de voo offline para o Cessna 152, baseado no SOP C-152 REV 1.3.">
+  <title>Kneeboard Ops C-152 SOP</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="./icons/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="./icons/favicon-16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="shell">
+    <main class="app" aria-label="Assistente de voo Cessna 152">
+      <footer class="dock">
+        <div class="dock__actions">
+          <button id="listenBtn" class="button button--primary" type="button">Ativar voz</button>
+          <button id="prevBtn" class="button button--ghost" type="button">Anterior</button>
+          <button id="nextBtn" class="button button--ghost" type="button">Próxima</button>
+          <button id="settingsBtn" class="button button--ghost" type="button" aria-haspopup="dialog">Ajustes</button>
+        </div>
+
+        <div class="dock__status">
+          <p class="transcript voice-state" id="transcript">Voz pronta</p>
+          <span id="voiceState" hidden>Voz pronta</span>
+        </div>
+      </footer>
+
+      <section class="phase-rail" id="phaseRail" aria-label="Fases do voo"></section>
+      <section class="subphase-rail" id="subphaseRail" aria-label="Etapas da fase atual"></section>
+
+      <section class="board" aria-live="polite">
+        <div class="board__topline">
+          <p class="status-label">Fase atual</p>
+          <p class="status-chip" id="phaseIndex">1 de 11</p>
+        </div>
+
+        <div class="board__headline">
+          <div>
+            <h2 id="phaseTitle">Pré-voo</h2>
+            <p id="phaseSummary">Inspeção externa, segurança e briefing antes de entrar na cabine.</p>
+          </div>
+          <div class="phase-tag" id="phaseTag">SOP ativo</div>
+        </div>
+
+        <div class="metrics" id="metrics"></div>
+
+        <section class="steps">
+          <div class="steps__header">
+            <p class="steps__title">O que fazer agora</p>
+            <p class="steps__hint" id="stepsHint">Comando por voz ou toque para mudar a fase.</p>
+          </div>
+          <ol id="stepsList" class="steps__list"></ol>
+        </section>
+
+        <section class="callout" id="cueCard">
+          <p class="callout__label">Próxima ação</p>
+          <p class="callout__text" id="cueText">Executar inspeção externa e conferir combustível mínimo para a missão.</p>
+          <div class="callout__stack" id="cueExtra" aria-live="polite"></div>
+        </section>
+
+        <section class="baseline" id="baselineStrip"></section>
+      </section>
+
+      <section class="settings-page" id="settingsPage" hidden role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="settings-panel">
+          <div class="settings-panel__top">
+            <div>
+              <p class="eyebrow">Kneeboard Ops</p>
+              <h2 id="settingsTitle">Ajustes</h2>
+            </div>
+            <button id="closeSettingsBtn" class="settings-close" type="button" aria-label="Fechar ajustes">Fechar</button>
+          </div>
+
+          <div class="settings-tabs" aria-label="Abas de ajustes">
+            <a href="#settingsControls">Ajustes</a>
+            <a href="#settingsInfo">SOP</a>
+          </div>
+
+          <section class="settings-card" id="settingsControls">
+            <h3>Comando de voz</h3>
+            <label>
+              Wake word
+              <input id="wakeWordInput" type="text" inputmode="text" autocomplete="off" spellcheck="false">
+            </label>
+            <label>
+              Altitude do circuito
+              <input id="patternAltitudeInput" type="text" inputmode="text" autocomplete="off" spellcheck="false">
+            </label>
+          </section>
+
+          <section class="settings-card settings-card--notice" id="settingsInfo">
+            <h3>Referência operacional</h3>
+            <p>O SOP desta aeronave é a referência operacional do kneeboard. Confirme sempre POH, checklist local e orientação do instrutor.</p>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
